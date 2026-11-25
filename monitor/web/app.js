@@ -8,7 +8,7 @@
   let history = [];
   let paused = false, receivedAny = false, lastRecv = 0, windowSec = 300;
   let token = new URLSearchParams(location.search).get("token") || "";
-  let lastAlertKey = "", lastNoteAt = 0;
+  let lastAlertKey = null, lastNoteAt = 0;
   if (token) stripTokenFromAddress();
 
   function stripTokenFromAddress() {

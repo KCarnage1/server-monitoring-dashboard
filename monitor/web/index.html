@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Server monitor</title>
+<meta name="description" content="Live CPU, memory, disk and network readings for one machine.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#alerts">Skip to alerts</a>
+
+<header class="bar">
+  <div class="host">
+    <h1 id="host">Server monitor</h1>
+    <p id="hostmeta" class="meta">Waiting for the first reading</p>
+  </div>
+  <div class="status" id="conn" role="status" aria-live="polite">
+    <span class="led" data-state="connecting" aria-hidden="true"></span>
+    <span id="conn-text">Connecting</span>
+    <span id="conn-age" class="meta"></span>
+  </div>
+  <div class="controls">
+    <div class="seg" role="group" aria-label="Chart window">
+      <button type="button" data-window="60" aria-pressed="false">1 min</button>
+      <button type="button" data-window="300" aria-pressed="true">5 min</button>
+    </div>
+    <button type="button" id="pause" aria-pressed="false">Pause</button>
+  </div>
+</header>
+
+<main>
+  <section id="alerts" class="alerts" tabindex="-1" aria-labelledby="alerts-h">
+    <h2 id="alerts-h">Alerts</h2>
+    <p id="alerts-empty" class="clear">Waiting for the first reading.</p>
+    <ul id="alert-list"></ul>
+  </section>
+
+  <section class="unit" id="u-cpu" aria-labelledby="cpu-h">
+    <header><h2 id="cpu-h">CPU</h2><span class="state" id="cpu-state"></span></header>
+    <p class="readout"><output id="cpu-v">--</output><span class="meta" id="cpu-sub"></span></p>
+    <canvas id="c-cpu" role="img" aria-label="CPU history"></canvas>
+    <p class="meta chart-note" id="cpu-note"></p>
+    <h3 class="sub">Cores</h3>
+    <ul class="cores" id="cores"></ul>
+  </section>
+
+  <section class="unit" id="u-mem" aria-labelledby="mem-h">
+    <header><h2 id="mem-h">Memory</h2><span class="state" id="mem-state"></span></header>
+    <p class="readout"><output id="mem-v">--</output><span class="meta" id="mem-sub"></span></p>
+    <canvas id="c-mem" role="img" aria-label="Memory history"></canvas>
+    <p class="meta chart-note" id="mem-note"></p>
+  </section>
+
+  <section class="unit" id="u-net" aria-labelledby="net-h">
+    <header><h2 id="net-h">Network</h2></header>
+    <p class="readout two"><span><span class="meta">In</span> <output id="net-in">--</output></span><span><span class="meta">Out</span> <output id="net-out">--</output></span></p>
+    <canvas id="c-net" role="img" aria-label="Network history"></canvas>
+    <p class="meta chart-note" id="net-note"></p>
+  </section>
+
+  <section class="unit" id="u-io" aria-labelledby="io-h">
+    <header><h2 id="io-h">Disk activity</h2></header>
+    <p class="readout two"><span><span class="meta">Read</span> <output id="io-r">--</output></span><span><span class="meta">Write</span> <output id="io-w">--</output></span></p>
+    <canvas id="c-io" role="img" aria-label="Disk activity history"></canvas>
+    <p class="meta chart-note" id="io-note"></p>
+  </section>
+
+  <section class="unit wide" aria-labelledby="disk-h">
+    <header><h2 id="disk-h">Disk space</h2></header>
+    <ul class="disks" id="disks"><li class="meta">Waiting for the first reading.</li></ul>
+  </section>
+
+  <section class="unit wide" aria-labelledby="proc-h" id="u-proc">
+    <header><h2 id="proc-h">Busiest processes</h2></header>
+    <div class="table-wrap">
+      <table>
+        <caption class="sr-only">Top processes by CPU use, updated with each reading</caption>
+        <thead><tr><th scope="col">Process</th><th scope="col" class="num">PID</th><th scope="col" class="num">CPU</th><th scope="col" class="num">Memory</th></tr></thead>
+        <tbody id="procs"><tr><td colspan="4" class="meta">Waiting for the first reading.</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer class="foot meta">Readings come from this machine only. Nothing leaves it.</footer>
+<script src="lib.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

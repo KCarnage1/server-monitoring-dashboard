@@ -1,4 +1,14 @@
-# Server Monitoring Dashboard
+<h1 align="center">Server Monitoring Dashboard</h1>
+
+<p align="center"><b>A live dashboard for one machine. No accounts, no API keys, no CDN.</b></p>
+
+<p align="center">
+  <img src="https://img.shields.io/github/actions/workflow/status/KCarnage1/server-monitoring-dashboard/ci.yml?branch=main&style=flat-square&label=tests" alt="Test status of the latest commit on main"> <img src="https://img.shields.io/badge/python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white" alt="Python 3.10 or newer"> <img src="https://img.shields.io/badge/dependency-psutil-2ea44f?style=flat-square" alt="One dependency: psutil"> <img src="https://img.shields.io/badge/licence-MIT-blue?style=flat-square" alt="MIT licence">
+</p>
+
+<p align="center">
+  <img src="docs/dashboard.jpg" alt="The dashboard in dark theme: an all-clear alert band, CPU and memory charts with per-core bars, then network and disk activity" width="860">
+</p>
 
 A live dashboard for one machine: CPU (total and per core), memory, disk space, disk activity, network traffic and the busiest processes. Python collects the numbers, the browser draws them as charts.
 
@@ -71,6 +81,18 @@ node --test tests/js/lib.test.js           # formatting, chart scaling and live/
 - History lives in memory and resets when the process restarts.
 - No temperature or GPU readings.
 
+## Project layout
+
+```text
+monitor/collector.py   reads CPU, memory, disk, network and processes with psutil
+monitor/server.py      HTTP server, live stream (SSE), token and Host checks, CSP
+monitor/cli.py         command-line options
+monitor/web/           index.html, app.js, lib.js (formatting, scaling, stale logic), style.css
+tests/                 pytest for the collector and server, node:test for lib.js
+```
+
 ## Licence
 
 MIT
+
+Part of my [portfolio](https://kcarnage1.github.io/My-Persona-Portfolio/).
